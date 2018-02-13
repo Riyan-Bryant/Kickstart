@@ -1,0 +1,46 @@
+#!/bin/bash
+echo "We are about to download Apache" >> log.txt
+cd Downloads >> log.txt
+wget https://archive.apache.org/dist/httpd/httpd-2.2.0.tar.gz >> log.txt
+wget https://archive.apache.org/dist/httpd/httpd-2.2.0.tar.gz.md5 >> log.txt
+
+echo "We verifying the downloaded apache source code file is genuine"
+
+md5sum  -c  httpd-2.2.0.tar.gz.md5 >> log.txt
+
+echo "Unzipping the tar file" >> log.txt
+
+tar xvf httpd-2.2.0.tar.gz >> log.txt
+
+echo "Changing to directory of the unzip file" >> log.txt
+
+cd httpd-2.2.0 >> log.txt
+
+echo "Compiling, build, installing Apache"
+
+./configure -prefix=/usr/local/apache  >> log.txt
+ 
+make >> log.txt
+ 
+make install >> log.txt
+
+echo "Configuring apache" >> log.txt
+
+cd a1 >> log.txt
+cp -v a1/httpd.conf /usr/local/apache/conf >> log.txt
+cp -v a1/httpd-userdir.conf /usr/local/apache/conf/extra/ >> log.txt
+ 
+echo "starting Apache"
+
+/usr/local/apache/bin/apachectl start >> log.txt
+
+echo "Opening connection for port 80"  >> log.txt
+
+
+
+firewall-cmd --permanent --add-service=http >> log.txt
+
+firewall-cmd --reload >> log.txt
+ 
+firewall-cmd --list-services >> log.txt
+
